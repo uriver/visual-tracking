@@ -31,4 +31,12 @@ table { border-collapse:collapse; border-spacing:0; }
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; 
 }
+.fade-enter-active,
+.fade-leave-active {
+transition: all .2s ease;
+}
+.fade-enter,
+.fade-leave-active {
+opacity: 0;
+}
 </style>

@@ -19,6 +19,7 @@ img {
 }
 .home-container {
   width: 100%;
+
 }
 .home-welcome {
   height: 650px;
