@@ -4,12 +4,12 @@
     <div class="event-header">
       <span class="event-font">事件：</span>
         <!-- 选择框 -->
-        <el-select v-model="value" placeholder="请选择" size="mini" class="select-set">
+        <el-select v-model="selectValue" placeholder="请选择" size="mini" class="select-set">
           <el-option
             v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            :key="item.eventName"
+            :label="item.eventName"
+            :value="item.eventName">
           </el-option>
         </el-select>
     </div>
@@ -24,18 +24,37 @@
         stripe
         style="width: 100%">
         <el-table-column
-          prop="date"
-          label="日期"
+          prop="eventName"
+          label="事件"
           width="180">
         </el-table-column>
         <el-table-column
-          prop="name"
-          label="姓名"
-          width="250">
+          prop="data.one"
+          :label= "date.one">
         </el-table-column>
         <el-table-column
-          prop="address"
-          label="点击次数">
+          prop="data.two"
+          :label= "date.two">
+        </el-table-column>
+        <el-table-column
+          prop="data.three"
+          :label= "date.three">
+        </el-table-column>
+        <el-table-column
+          prop="data.four"
+          :label= "date.four">
+        </el-table-column>
+        <el-table-column
+          prop="data.five"
+          :label= "date.five">
+        </el-table-column>
+        <el-table-column
+          prop="data.six"
+          :label= "date.six">
+        </el-table-column>
+        <el-table-column
+          prop="data.seven"
+          :label= "date.seven">
         </el-table-column>
       </el-table>  
     </div> 
@@ -44,7 +63,7 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
+        :current-page="currentPage"
         :page-sizes="[10, 20, 30]"
         :page-size="10"
         layout="total, sizes, prev, pager, next, jumper"
@@ -58,39 +77,142 @@
 export default {
   data() {
         return {
-          options: [{
-            value: '选项1',
-            label: '购买'
-          }, {
-            value: '选项2',
-            label: '查看文档'
-          }, {
-            value: '选项3',
-            label: '联系客服'
-          }],
-          value: '选项1',
+          user: "shallow",
+          options: [],
+          selectValue: '请选择事件',
+          currentPage: 1,
+          date:{
+            one: null,
+            two: null,
+            three: null,
+            four: null,
+            five: null,
+            six: null,
+            seven: null
+          },
+          chartData: [],
+          testData: [820, 932, 901, 934, 1290, 1330, 1320],
+          tableData: []
 
-          tableData: [{
-            date: '2016-05-02',
-            name: '购买',
-            address: '30'
-          }, {
-            date: '2016-05-04',
-            name: '查看文档',
-            address: '50'
-          }, {
-            date: '2016-05-01',
-            name: '联系客服',
-            address: '80'
-          }]
-          
         }
   },
   mounted(){
-    this.drawLine();
+    this.getDate()
+    this.getEvent()
+    this.drawLine()
+  },
+  watch: {
+    selectValue: function(){
+      this.drawLine(this.selectValue)
+    }
   },
   methods: {
-    drawLine(){
+    GetDateStr(AddDayCount) { 
+      var dd = new Date(); 
+      dd.setDate(dd.getDate()+AddDayCount);//获取AddDayCount天后的日期 
+      var y = dd.getFullYear(); 
+      var m = dd.getMonth()+1;//获取当前月份的日期 
+      var d = dd.getDate(); 
+      return y+"-"+m+"-"+d; 
+    }, 
+    getDate() {
+      this.date["seven"] = this.GetDateStr(0)
+      this.date["six"] = this.GetDateStr(-1)
+      this.date["five"] = this.GetDateStr(-2)
+      this.date["four"] = this.GetDateStr(-3)
+      this.date["three"] = this.GetDateStr(-4)
+      this.date["two"] = this.GetDateStr(-5)
+      this.date["one"] = this.GetDateStr(-6)
+    },
+    //获取所有事件名
+    getEvent(){
+      var that = this
+      var opts = {
+        method: "POST",
+        body: JSON.stringify({"user":this.user}),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+      }
+      fetch('http://127.0.0.1:3000/event/getEvent',opts)
+        .then(function(res){ 
+            res.json().then(function(data){
+            that.options = data
+            for(let i=0;i<data.length;i++){
+              // that.tableData[i] = {}
+              that.tableData.push({})
+              that.$set(that.tableData[i],'eventName',data[i].eventName)
+              // that.tableData[i].eventName = data[i].eventName
+            }
+            that.getTable()
+          }); 
+         })
+        .catch(function(err){ console.log(err) })
+    },
+    //获取echarts数据
+    // getChart(event){
+    //   var that = this
+    //   var opts = {
+    //     method: "POST",
+    //     body: JSON.stringify({"user":this.user,"eventName":event}),
+    //     headers: {
+    //         'Accept': 'application/json, text/plain, */*',
+    //         'Content-Type': 'application/json'
+    //     },
+    //   }
+    //   fetch('http://127.0.0.1:3000/event/getEventData',opts)
+    //     .then(function(res){ 
+    //         res.json().then(function(data){
+    //         that.chartData = data
+    //       }); 
+    //      })
+    //     .catch(function(err){ console.log(err) })
+    // },
+
+    //获取表格数据*************************************************************
+    getTable(){
+      var that = this
+      for(let item in this.tableData){
+        var opts = {
+        method: "POST",
+        body: JSON.stringify({"user":this.user,"eventName":that.tableData[item].eventName}),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+      }
+      fetch('http://127.0.0.1:3000/event/getEventData',opts)
+        .then(function(res){ 
+            res.json().then(function(data){
+              //that.tableData[item].data = data
+              that.$set(that.tableData[item],'data',data)
+          }); 
+         })
+        .catch(function(err){ console.log(err) })
+      }
+    },
+
+    //******************************************************** */
+
+
+
+    drawLine(item){
+        var mydata = []
+        for(var index in this.tableData){
+          if(item == this.tableData[index].eventName){
+            mydata = this.tableData[index].data
+          }
+        }
+        var echartData = []
+        echartData.push(mydata.one)
+        echartData.push(mydata.two)
+        echartData.push(mydata.three)
+        echartData.push(mydata.four)
+        echartData.push(mydata.five)
+        echartData.push(mydata.six)
+        echartData.push(mydata.seven)
+        console.log(echartData)
         // 基于准备好的dom，初始化echarts实例
         let myChart = this.$echarts.init(document.getElementById('myChart'))
         // 绘制图表
@@ -99,18 +221,20 @@ export default {
             tooltip: {},
             xAxis: {
               type: 'category',
-              data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+              data: [this.date.one, this.date.two, this.date.three, this.date.four, this.date.five, this.date.six, this.date.seven]
             },
             yAxis: {
               type: 'value'
             },
             series: [{
-              data: [820, 932, 901, 934, 1290, 1330, 1320],
+              data: echartData,
               type: 'line'
           }]
         });
         window.onresize = myChart.resize;
-    }
+    },
+    handleSizeChange(){},
+    handleCurrentChange(){}
   }
 }
 </script>

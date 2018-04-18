@@ -5,9 +5,9 @@
 			<span>|</span>
 			<a href="" target="_blank">招贤纳士</a>
 			<span>|</span>
-			<a href="" target="_blank">移动客户端</a>
+			<a href="" target="_blank">官方论坛</a>
 			<span>|</span>
-			<a href="" target="_blank">官方博客</a>
+			<a href="" target="_blank">官方微信</a>
 		</div>
 		<div class="copy">
 			&copy; 哈尔滨工业大学（威海）地址：山东省威海市文化西路2号 | 邮编：264209
