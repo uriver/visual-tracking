@@ -74,10 +74,10 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   data() {
         return {
-          user: "shallow",
           options: [],
           selectValue: '请选择事件',
           currentPage: 1,
@@ -95,6 +95,11 @@ export default {
           tableData: []
 
         }
+  },
+  computed: {
+      ...mapState([
+          'user'
+      ])
   },
   mounted(){
     this.getDate()

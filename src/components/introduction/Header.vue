@@ -7,7 +7,7 @@
           <ul class="items">
               <li @click = "goToHome" :class="[category == 0 ? 'active': '']">首页</li>
               <li @click = "goToDoc" :class="[category == 1 ? 'active': '']">文档</li>
-              <li @click="$router.push('/statistics')">统计平台</li>
+              <li @click="$router.push('/statistics/overview')">统计平台</li>
           </ul>
       </div>
   </div>

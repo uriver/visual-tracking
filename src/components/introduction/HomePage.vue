@@ -3,7 +3,7 @@
     <div class="home-welcome">
       <div class="title">可视化埋点，带你走进数据的精彩世界</div>
       <div class="sec-title">不是程序员也能随心所欲操作数据</div>
-      <button class="start-sta">开始统计</button>
+      <button class="start-sta" @click="$router.push('/statistics/overview')" >开始统计</button>
     </div>
 
     <div class="chart-container">
