@@ -35,11 +35,11 @@
     <div class="web-table">
       <!-- 站点名称/创建日期/操作者/编辑 -->
       <el-table
-        :data="tableData"
+        :data="webData"
         border
         style="width: 100%">
         <el-table-column
-          prop="webName"
+          prop="userName"
           label="站点名称">
         </el-table-column>
         <el-table-column
@@ -81,15 +81,7 @@ export default {
         webName: "",
         operator: ""
       },
-      tableData: [{
-          webName: 'shallow',
-          operator: 'yuchuan',
-          time: '2018-4-29'
-        },{
-          webName: 'asd',
-          operator: 'yuchuan',
-          time: '2018-4-30'
-        }]
+      webData: []
     }
   },
   computed: {
@@ -97,7 +89,21 @@ export default {
           'user'
       ])
   },
+  mounted() {
+    this.getUser()
+  },
   methods: {
+    //获取_user中所有的数据填入表格
+    getUser() {
+      var that = this
+      fetch('http://127.0.0.1:3000/users/getUser',{method:'GET'})
+        .then(function(res){
+          res.json().then(function(data){
+            that.webData = data
+          })
+        })
+        .catch(function(err){ console.log(err) })
+    },
     //监测站点是否存在
     checkUser() {
       var that = this
@@ -179,7 +185,7 @@ export default {
         .catch(_ => {});
     },
     handleUse(a,b) {
-      this.$store.commit('changeUser',b.webName)
+      this.$store.commit('changeUser',b.userName)
       this.$message({
         message: '监测成功',
         type: 'success'
