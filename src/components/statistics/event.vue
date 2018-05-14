@@ -217,7 +217,7 @@ export default {
         echartData.push(mydata.five)
         echartData.push(mydata.six)
         echartData.push(mydata.seven)
-        console.log(echartData)
+        
         // 基于准备好的dom，初始化echarts实例
         let myChart = this.$echarts.init(document.getElementById('myChart'))
         // 绘制图表

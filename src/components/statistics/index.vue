@@ -33,6 +33,10 @@
 						<i class="el-icon-edit"></i> 
 						<span>用户</span> 
 					</el-menu-item>
+					<el-menu-item index='/statistics/newuser'>
+						<i class="el-icon-sort"></i> 
+						<span>新增用户</span> 
+					</el-menu-item>
 				</el-menu>
 
 				<!-- 导航菜单——折叠后 -->
@@ -40,6 +44,7 @@
 					<li class="el-submenu__title" @click="$router.push('/statistics/overview')"><i class="el-icon-document"></i></li>
 					<li class="el-submenu__title" @click="$router.push('/statistics/event')"><i class="el-icon-share"></i></li>
 					<li class="el-submenu__title" @click="$router.push('/statistics/user')"><i class="el-icon-edit"></i></li>
+					<li class="el-submenu__title" @click="$router.push('/statistics/newuser')"><i class="el-icon-sort"></i></li>
 				</ul>
 			</aside>
 
