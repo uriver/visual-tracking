@@ -162,7 +162,9 @@ export default {
               that.$message.error('操作失败')
             }
             else if(data.status == "1"){
-              that.$store.commit('changeUser',that.trackName)
+              // that.$store.commit('changeUser',that.trackName)
+              console.log(that.trackName)
+              console.log(that.user)
               that.$message({ 
                 message: '新建成功',
                 type: 'success'

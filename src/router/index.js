@@ -6,6 +6,7 @@ import Overview from "@/components/statistics/overview"
 import Events from "@/components/statistics/event"
 import User from "@/components/statistics/user"
 import NewUser from "@/components/statistics/newuser"
+import Platform from "@/components/statistics/platform"
 
 Vue.use(Router)
 
@@ -21,7 +22,8 @@ export default new Router({
         { path: 'overview', component: Overview },
         { path: 'event', component: Events },
         { path: 'user', component: User },
-        { path: 'newuser',component: NewUser }
+        { path: 'newuser',component: NewUser },
+        { path: 'platform',component: Platform }
       ]
     }
   ]

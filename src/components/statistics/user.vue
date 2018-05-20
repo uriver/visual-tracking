@@ -35,17 +35,44 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   data() {
     return {
-      ipData:[{
-        ip: "120.0.0.1",
-        firstDate: "2018-5-7",
-        lastDate: "2018-5-9",
-        time: "15:37",
-        userVisit: "3",
-        pageVisit: "21"
-      }]
+      ipData:[]
+    }
+  },
+  computed: {
+      ...mapState([
+          'user'
+      ])
+  },
+  mounted() {
+    this.getIP()
+  },
+  methods: {
+    getIP(){
+      var that = this
+      if(this.user == "暂未选择" || this.user == ""){
+        this.ipData = []
+      }
+      else{
+        //获取IP数据
+        fetch('http://127.0.0.1:3000/users/getIP',{
+        method: "POST",
+        body: JSON.stringify({"user":that.user}),
+        headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(function(res){
+          res.json().then(function(data){
+            that.ipData = data
+          })
+        })
+        .catch(function(res){ console.log(res) })
+      }   
     }
   }
 }
