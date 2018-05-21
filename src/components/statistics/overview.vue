@@ -163,12 +163,13 @@ export default {
             }
             else if(data.status == "1"){
               // that.$store.commit('changeUser',that.trackName)
-              console.log(that.trackName)
-              console.log(that.user)
+              // console.log(that.trackName)
+              // console.log(that.user)
               that.$message({ 
                 message: '新建成功',
                 type: 'success'
               });
+              that.getUser()
             }
             else if(data.status == "2"){
               that.$message.error('已存在该站点')
@@ -193,8 +194,29 @@ export default {
         type: 'success'
       });
     },
-    handleDelete() {
+    handleDelete(a,b) {
+      var user = this.webData[a].userName
+      var that = this
+      this.$confirm('确认删除？')
+        .then(_ => {
+          fetch('http://127.0.0.1:3000/users/deleteUser',{
+            method: "POST",
+            body: JSON.stringify({"user":user}),
+            headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(function(res){
+              that.getUser()
+            })
+            .catch(function(res){ console.log(res) })
 
+
+
+          done();
+        })
+        .catch(_ => {});
     }
   }
 }

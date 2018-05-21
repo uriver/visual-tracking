@@ -1,8 +1,10 @@
 <template>
   <div class="platform-container">
-    <div class="top-chart">
-      <div id="plantform-pie"></div>
-    </div>
+	<div class="pie-border">
+		<div class="top-chart">
+			<div id="plantform-pie"></div>
+		</div>
+	</div>
     <div class="bottom-chart">
       <div id="plantform-bar"></div>
     </div>
@@ -78,7 +80,7 @@ export default {
 			let that = this
 			pieChart.setOption({
 					title : {
-							text: '用户浏览器',
+							text: '用户浏览器统计',
 							subtext: '根据页面浏览次数记录',
 							x:'center'
 					},
@@ -119,6 +121,10 @@ export default {
 			let b = that.barSeries
 			
 			barChart.setOption({
+				title: {
+					text: '用户操作系统统计',
+					subtext: '根据页面浏览次数记录'
+				},
 				xAxis: {
 					type: 'category',
 					data: a
@@ -144,9 +150,14 @@ export default {
 	.platform-container {
 		width: 100%;
 	}
+	.pie-border {
+		width: 100%;
+		border-radius: 8px;
+		border: 1px solid #C0C4CC;
+	}
 	.top-chart {
 		width: 1000px;
-		margin: auto auto;
+		margin: 20px auto;
 	}
 	#plantform-pie {
 		width: 100%;

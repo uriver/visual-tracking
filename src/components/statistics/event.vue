@@ -222,7 +222,7 @@ export default {
         let myChart = this.$echarts.init(document.getElementById('myChart'))
         // 绘制图表
         myChart.setOption({
-            title: { text: 'echarts' },
+            title: { text: '事件点击数据' },
             tooltip: {},
             xAxis: {
               type: 'category',
