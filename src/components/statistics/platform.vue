@@ -49,7 +49,6 @@ export default {
 				})
 				.then(function(res){
 					res.json().then(function(data){
-						console.log(data)
 						//数据处理
 						data.forEach(function(obj,index){
 							if(obj.type == "browser"){
