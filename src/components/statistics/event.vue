@@ -56,6 +56,15 @@
           prop="data.seven"
           :label= "date.seven">
         </el-table-column>
+        <el-table-column
+          label="编辑">
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
       </el-table>  
     </div> 
     <!-- 分页 -->
@@ -67,7 +76,7 @@
         :page-sizes="[10, 20, 30]"
         :page-size="10"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="3">
+        :total="eventNumber">
       </el-pagination>
     </div>
   </div>
@@ -92,8 +101,8 @@ export default {
           },
           chartData: [],
           testData: [820, 932, 901, 934, 1290, 1330, 1320],
-          tableData: []
-
+          tableData: [],
+          eventNumber: 0
         }
   },
   computed: {
@@ -144,12 +153,15 @@ export default {
         .then(function(res){ 
             res.json().then(function(data){
             that.options = data
+            var number = 0
             for(let i=0;i<data.length;i++){
               // that.tableData[i] = {}
               that.tableData.push({})
               that.$set(that.tableData[i],'eventName',data[i].eventName)
+              number = number + 1
               // that.tableData[i].eventName = data[i].eventName
             }
+            that.eventNumber = number
             that.getTable()
           }); 
          })
@@ -237,6 +249,27 @@ export default {
           }]
         });
         window.onresize = myChart.resize;
+    },
+    handleDelete(index) {
+      var that = this
+      var eventName = this.tableData[index].eventName
+       this.$confirm('确认删除？')
+        .then(_ => {
+          var opts = {
+            method: "POST",
+            body: JSON.stringify({"user":that.user,"eventName": eventName}),
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+          }
+          fetch('http://127.0.0.1:3000/event/deleteEvent',opts)
+            .then(function(){
+              that.tableData = []
+              that.getEvent()
+            })
+            .catch(function(res){ console.log(res) })
+        })
     },
     handleSizeChange(){},
     handleCurrentChange(){}
