@@ -8,25 +8,11 @@
 
     <div class="chart-container">
       <div class="chart-intro">
-			  <h1>更丰富的图表数据显示</h1>
+			  <h1>丰富的图表数据显示</h1>
 			  <p>使用可视化埋点，个性化编辑您需要的信息，更准确的把握网站数据</p>
 		  </div>
 
       <div id="showChart"></div>
-    </div>
-
-    <div class="pie-container">
-      <div class="chart-intro">
-        <h1>更多元的可视化决策</h1>
-        <p>选择您需要的参考内容，自动生成您期待的可视化模型</p>
-      </div>
-    </div>
-
-    <div class="connect-container">
-      <div class="chart-intro">
-        <h1>更多精彩内容</h1>
-        <p>联系我们，与您共同定制更多你需要的内容</p>
-      </div>
     </div>
   </div>
 </template>
@@ -164,14 +150,5 @@ img {
 #showChart {
   width: 100%;
   height: 500px;
-}
-.pie-container {
-  width: 100%; 
-  height: 650px; 
-  background-color: #f5f5f5; 
-}
-.connect-container {
-  width: 100%; 
-  height: 650px; 
 }
 </style>
