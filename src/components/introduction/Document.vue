@@ -2,27 +2,35 @@
   <div class="document-container">
     <div class="doc-category">
       <div class="doc-title">DOCUMENT</div>
-      <div class="level-one" @click="activeDoc(1)" :class="[ifActive == 1 ? 'active': '']">测试</div>
-      <div class="level-one" @click="activeDoc(2)" :class="[ifActive == 2 ? 'active': '']">测试1223</div>
-      <div class="level-one" @click="activeDoc(3)" :class="[ifActive == 3 ? 'active': '']">测试14as</div>
-      <div class="level-one" @click="activeDoc(4)" :class="[ifActive == 4 ? 'active': '']">测试ydfsd</div>
-      <div class="level-one" @click="activeDoc(5)" :class="[ifActive == 5 ? 'active': '']">测试asdad</div>
-      <div class="level-one" @click="activeDoc(6)" :class="[ifActive == 6 ? 'active': '']">测试asdf</div>
+      <div class="level-one" @click="activeDoc(1)" :class="[ifActive == 1 ? 'active': '']">产品介绍</div>
+      <div class="level-one" @click="activeDoc(2)" :class="[ifActive == 2 ? 'active': '']">快速开始</div>
+      <div class="level-one" @click="activeDoc(3)" :class="[ifActive == 3 ? 'active': '']">事件</div>
+      <div class="level-one" @click="activeDoc(4)" :class="[ifActive == 4 ? 'active': '']">用户</div>
+      <div class="level-one" @click="activeDoc(5)" :class="[ifActive == 5 ? 'active': '']">浏览平台</div>
     </div>  
     <div class="doc-content">
-      <test-doc1 v-if="ifActive === 1"></test-doc1>
-      <test-doc2 v-if="ifActive === 2"></test-doc2>
+      <introduction v-if="ifActive === 1"></introduction>
+      <start v-if="ifActive === 2"></start>
+      <event v-if="ifActive === 3"></event>
+      <user v-if="ifActive === 4"></user>
+      <plantform v-if="ifActive === 5"></plantform>
     </div>
   </div>
 </template>
 
 <script>
-import testDoc1 from './documents/testDoc1'
-import testDoc2 from './documents/testDoc2'
+import introduction from './documents/introduction'
+import start from './documents/start'
+import event from './documents/event'
+import user from './documents/user'
+import plantform from './documents/plantform'
 export default {
   components: {
-    testDoc1,
-    testDoc2
+    introduction,
+    start,
+    event,
+    user,
+    plantform
   },
   data() {
     return {
@@ -74,6 +82,7 @@ export default {
 
 .doc-content {
   position: absolute;
+  padding: 20px 200px 0 200px;
   left: 300px;
   top: 50px;
   bottom: 0px;

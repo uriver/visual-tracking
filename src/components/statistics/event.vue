@@ -20,7 +20,7 @@
     <!-- 表格 -->
     <div class="event-table">
       <el-table
-        :data="tableData"
+        :data="tableDataSplit"
         stripe
         style="width: 100%">
         <el-table-column
@@ -73,7 +73,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
-        :page-sizes="[10, 20, 30]"
+        :page-sizes="[10]"
         :page-size="10"
         layout="total, sizes, prev, pager, next, jumper"
         :total="eventNumber">
@@ -102,6 +102,7 @@ export default {
           chartData: [],
           testData: [820, 932, 901, 934, 1290, 1330, 1320],
           tableData: [],
+          tableDataSplit: [],
           eventNumber: 0
         }
   },
@@ -163,6 +164,7 @@ export default {
             }
             that.eventNumber = number
             that.getTable()
+            that.paging()
           }); 
          })
         .catch(function(err){ console.log(err) })
@@ -210,6 +212,15 @@ export default {
       }
     },
 
+    //分页
+    paging() {
+      if(this.tableData.length > 10){
+        this.tableDataSplit = this.tableData.slice(0,10)
+      }
+      else{
+        this.tableDataSplit = this.tableData
+      }
+    },
     //******************************************************** */
 
 
@@ -272,7 +283,9 @@ export default {
         })
     },
     handleSizeChange(){},
-    handleCurrentChange(){}
+    handleCurrentChange(page){
+      this.tableDataSplit = this.tableData.slice(page*10 - 10,page*10 )
+    }
   }
 }
 </script>

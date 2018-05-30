@@ -1,7 +1,7 @@
 <template>
   <div class="user-statistic">
     <el-table
-      :data="ipData"
+      :data="ipDataSlice"
       border
       style="width: 100%">
       <el-table-column
@@ -31,6 +31,18 @@
         label="浏览次数">
       </el-table-column>
     </el-table>
+    <!-- 分页 -->
+    <div class="block">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[20]"
+        :page-size="10"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="ipData.length">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -39,7 +51,9 @@ import {mapState} from 'vuex'
 export default {
   data() {
     return {
-      ipData:[]
+      ipData:[],
+      ipDataSlice: [],
+      currentPage: 1
     }
   },
   computed: {
@@ -55,6 +69,7 @@ export default {
       var that = this
       if(this.user == "暂未选择" || this.user == ""){
         this.ipData = []
+        this.ipDataSlice = ipData
       }
       else{
         //获取IP数据
@@ -69,15 +84,22 @@ export default {
         .then(function(res){
           res.json().then(function(data){
             that.ipData = data
+            that.ipDataSlice = that.ipData.slice(0,20)
           })
         })
         .catch(function(res){ console.log(res) })
       }   
+    },
+    handleSizeChange(){},
+    handleCurrentChange(page){
+      this.ipDataSlice = this.ipData.slice(page*20 - 10,page*20 )
     }
   }
 }
 </script>
 
 <style scoped>
-
+  .block {
+    float: right;
+  }
 </style>

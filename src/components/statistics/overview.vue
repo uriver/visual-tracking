@@ -2,7 +2,7 @@
   <div>
     <div>当前监测站点：{{user}}</div>
     <div class="create-track">
-      请输入埋点站点名称：
+      请输入埋点页面名称：
       <el-input
         placeholder="输入名称"
         v-model="trackName"
@@ -18,7 +18,7 @@
       :visible.sync="dialogVisible"
       width="30%"
       :before-close="handleClose">
-        请输入站点名称：
+        请输入埋点的页面名称：
         <el-input
           v-model="regist.webName">
         </el-input>
